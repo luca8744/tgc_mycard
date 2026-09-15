@@ -1,0 +1,138 @@
+[
+  {
+    "id": "mtg-001",
+    "name": "Black Lotus",
+    "game": "Magic",
+    "setName": "Unlimited Edition",
+    "cardNumber": "232",
+    "imageUrl": "https://cards.scryfall.io/large/front/b/d/bd8fa327-dd41-4737-8f19-2cf5eb1f7cdd.jpg",
+    "currentPrice": 12500.0,
+    "quantity": 1,
+    "rarity": "Rare",
+    "priceHistory": [
+      { "timestamp": "2026-01-01T00:00:00.000Z", "price": 11000.0 },
+      { "timestamp": "2026-03-15T00:00:00.000Z", "price": 11500.0 },
+      { "timestamp": "2026-06-01T00:00:00.000Z", "price": 12000.0 },
+      { "timestamp": "2026-09-01T00:00:00.000Z", "price": 12500.0 }
+    ]
+  },
+  {
+    "id": "mtg-002",
+    "name": "The One Ring",
+    "game": "Magic",
+    "setName": "The Lord of the Rings: Tales of Middle-earth",
+    "cardNumber": "0246",
+    "imageUrl": "https://cards.scryfall.io/large/front/d/5/d5806e68-1054-458e-866d-1f2470f682b2.jpg",
+    "currentPrice": 85.0,
+    "quantity": 2,
+    "rarity": "Mythic",
+    "priceHistory": [
+      { "timestamp": "2026-01-01T00:00:00.000Z", "price": 60.0 },
+      { "timestamp": "2026-04-10T00:00:00.000Z", "price": 72.0 },
+      { "timestamp": "2026-07-20T00:00:00.000Z", "price": 80.0 },
+      { "timestamp": "2026-09-01T00:00:00.000Z", "price": 85.0 }
+    ]
+  },
+  {
+    "id": "pok-001",
+    "name": "Charizard Holo",
+    "game": "Pokémon",
+    "setName": "Base Set 1st Edition",
+    "cardNumber": "4/102",
+    "imageUrl": "https://images.pokemontcg.io/base1/4_hires.png",
+    "currentPrice": 3800.0,
+    "quantity": 1,
+    "rarity": "Rare Holo",
+    "priceHistory": [
+      { "timestamp": "2026-01-01T00:00:00.000Z", "price": 3200.0 },
+      { "timestamp": "2026-04-01T00:00:00.000Z", "price": 3400.0 },
+      { "timestamp": "2026-07-01T00:00:00.000Z", "price": 3650.0 },
+      { "timestamp": "2026-09-01T00:00:00.000Z", "price": 3800.0 }
+    ]
+  },
+  {
+    "id": "pok-002",
+    "name": "Umbreon VMAX Alt Art",
+    "game": "Pokémon",
+    "setName": "Evolving Skies",
+    "cardNumber": "215/203",
+    "imageUrl": "https://images.pokemontcg.io/swsh7/215_hires.png",
+    "currentPrice": 620.0,
+    "quantity": 1,
+    "rarity": "Secret Rare",
+    "priceHistory": [
+      { "timestamp": "2026-01-01T00:00:00.000Z", "price": 480.0 },
+      { "timestamp": "2026-04-15T00:00:00.000Z", "price": 540.0 },
+      { "timestamp": "2026-07-01T00:00:00.000Z", "price": 590.0 },
+      { "timestamp": "2026-09-01T00:00:00.000Z", "price": 620.0 }
+    ]
+  },
+  {
+    "id": "op-001",
+    "name": "Monkey.D.Luffy (Manga Alt Art)",
+    "game": "One Piece",
+    "setName": "Romance Dawn OP-01",
+    "cardNumber": "OP01-003",
+    "imageUrl": "https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP01/OP01-003_EN.png",
+    "currentPrice": 1850.0,
+    "quantity": 1,
+    "rarity": "SEC Manga Parallel",
+    "priceHistory": [
+      { "timestamp": "2026-01-01T00:00:00.000Z", "price": 1400.0 },
+      { "timestamp": "2026-03-20T00:00:00.000Z", "price": 1600.0 },
+      { "timestamp": "2026-06-15T00:00:00.000Z", "price": 1750.0 },
+      { "timestamp": "2026-09-01T00:00:00.000Z", "price": 1850.0 }
+    ]
+  },
+  {
+    "id": "op-002",
+    "name": "Shanks SEC (Alternate Art)",
+    "game": "One Piece",
+    "setName": "Romance Dawn OP-01",
+    "cardNumber": "OP01-120",
+    "imageUrl": "https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/one-piece/OP01/OP01-120_EN.png",
+    "currentPrice": 780.0,
+    "quantity": 1,
+    "rarity": "SEC Parallel",
+    "priceHistory": [
+      { "timestamp": "2026-01-01T00:00:00.000Z", "price": 650.0 },
+      { "timestamp": "2026-04-10T00:00:00.000Z", "price": 700.0 },
+      { "timestamp": "2026-07-05T00:00:00.000Z", "price": 740.0 },
+      { "timestamp": "2026-09-01T00:00:00.000Z", "price": 780.0 }
+    ]
+  },
+  {
+    "id": "lor-001",
+    "name": "Elsa - Spirit of Winter (Enchanted)",
+    "game": "Lorcana",
+    "setName": "The First Chapter",
+    "cardNumber": "207/204",
+    "imageUrl": "https://cdn.lorcana-api.com/cards/207_204_enchanted.png",
+    "currentPrice": 950.0,
+    "quantity": 1,
+    "rarity": "Enchanted",
+    "priceHistory": [
+      { "timestamp": "2026-01-01T00:00:00.000Z", "price": 800.0 },
+      { "timestamp": "2026-03-30T00:00:00.000Z", "price": 870.0 },
+      { "timestamp": "2026-06-20T00:00:00.000Z", "price": 910.0 },
+      { "timestamp": "2026-09-01T00:00:00.000Z", "price": 950.0 }
+    ]
+  },
+  {
+    "id": "lor-002",
+    "name": "Mickey Mouse - Wayward Sorcerer",
+    "game": "Lorcana",
+    "setName": "The First Chapter",
+    "cardNumber": "15/204",
+    "imageUrl": "https://cdn.lorcana-api.com/cards/15_204.png",
+    "currentPrice": 18.5,
+    "quantity": 3,
+    "rarity": "Super Rare",
+    "priceHistory": [
+      { "timestamp": "2026-01-01T00:00:00.000Z", "price": 24.0 },
+      { "timestamp": "2026-04-10T00:00:00.000Z", "price": 21.0 },
+      { "timestamp": "2026-07-01T00:00:00.000Z", "price": 19.5 },
+      { "timestamp": "2026-09-01T00:00:00.000Z", "price": 18.5 }
+    ]
+  }
+]
