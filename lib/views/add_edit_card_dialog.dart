@@ -21,6 +21,7 @@ class _AddEditCardDialogState extends State<AddEditCardDialog> {
   late TextEditingController _quantityController;
   late TextEditingController _imageUrlController;
   late TextEditingController _rarityController;
+  late TextEditingController _urlController;
 
   String _selectedGame = 'Magic';
   bool _isSearching = false;
@@ -47,6 +48,7 @@ class _AddEditCardDialogState extends State<AddEditCardDialog> {
         TextEditingController(text: card != null ? card.quantity.toString() : '1');
     _imageUrlController = TextEditingController(text: card?.imageUrl ?? '');
     _rarityController = TextEditingController(text: card?.rarity ?? '');
+    _urlController = TextEditingController();
 
     if (card != null && _games.contains(card.game)) {
       _selectedGame = card.game;
@@ -62,25 +64,20 @@ class _AddEditCardDialogState extends State<AddEditCardDialog> {
     _quantityController.dispose();
     _imageUrlController.dispose();
     _rarityController.dispose();
+    _urlController.dispose();
     super.dispose();
   }
 
   Future<void> _autoSearchCardTrader() async {
+    final urlInput = _urlController.text.trim();
     final name = _nameController.text.trim();
     final number = _numberController.text.trim();
     final setStr = _setController.text.trim();
 
-    final query = [name, number, setStr].where((s) => s.isNotEmpty).join(' ');
-
-    if (query.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-              'Inserisci il nome o il numero della carta (es. Loki, OP17-119) prima di cercare'),
-          backgroundColor: Colors.orange,
-        ),
-      );
-      return;
+    final provider = Provider.of<PortfolioProvider>(context, listen: false);
+    if (provider.cardTraderService.apiToken == null ||
+        provider.cardTraderService.apiToken!.isEmpty) {
+      provider.cardTraderService.apiToken = provider.cardTraderToken;
     }
 
     setState(() {
@@ -88,10 +85,41 @@ class _AddEditCardDialogState extends State<AddEditCardDialog> {
       _searchStatus = 'Ricerca in corso su CardTrader...';
     });
 
-    final provider = Provider.of<PortfolioProvider>(context, listen: false);
-    if (provider.cardTraderService.apiToken == null ||
-        provider.cardTraderService.apiToken!.isEmpty) {
-      provider.cardTraderService.apiToken = provider.cardTraderToken;
+    // Se l'utente ha incollato un link CardTrader
+    if (urlInput.contains('cardtrader.com') || name.contains('cardtrader.com')) {
+      final link = urlInput.contains('cardtrader.com') ? urlInput : name;
+      final result = await provider.cardTraderService.searchByCardTraderUrl(link);
+      if (result != null) {
+        setState(() {
+          _nameController.text = result.name;
+          if (result.setName.isNotEmpty) _setController.text = result.setName;
+          if (result.cardNumber.isNotEmpty) _numberController.text = result.cardNumber;
+          if (result.imageUrl.isNotEmpty) _imageUrlController.text = result.imageUrl;
+          _priceController.text = result.price.toStringAsFixed(2);
+          if (result.rarity.isNotEmpty) _rarityController.text = result.rarity;
+          if (_games.contains(result.game)) _selectedGame = result.game;
+          _searchStatus = '✓ Importato con successo dal Link CardTrader!';
+          _isSearching = false;
+        });
+        return;
+      }
+    }
+
+    final query = [name, number, setStr].where((s) => s.isNotEmpty).join(' ');
+
+    if (query.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+              'Incolla un link CardTrader o inserisci il nome/numero della carta'),
+          backgroundColor: Colors.orange,
+        ),
+      );
+      setState(() {
+        _isSearching = false;
+        _searchStatus = null;
+      });
+      return;
     }
 
     final result = await provider.cardTraderService.searchCard(
@@ -113,6 +141,7 @@ class _AddEditCardDialogState extends State<AddEditCardDialog> {
         }
         _priceController.text = result.price.toStringAsFixed(2);
         if (result.rarity.isNotEmpty) _rarityController.text = result.rarity;
+        if (_games.contains(result.game)) _selectedGame = result.game;
         _searchStatus = '✓ Trovato su CardTrader!';
       });
     } else {
@@ -245,7 +274,22 @@ class _AddEditCardDialogState extends State<AddEditCardDialog> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 16),
+                // SEZIONE IMPORT LINK CARDTRADER
+                TextFormField(
+                  controller: _urlController,
+                  style: const TextStyle(color: Colors.white, fontSize: 13),
+                  decoration: _inputDecoration(
+                    'Link CardTrader (Importa Diretto)',
+                    hint: 'https://www.cardtrader.com/cards/kuzan-op-10-royal-blood',
+                    prefixIcon: Icons.link,
+                  ),
+                  onChanged: (val) {
+                    if (val.contains('cardtrader.com')) {
+                      _autoSearchCardTrader();
+                    }
+                  },
+                ),
+                const SizedBox(height: 12),
 
                 // NOME CARTA + BOTTONE AUTO-RICERCA
                 Row(
@@ -256,8 +300,8 @@ class _AddEditCardDialogState extends State<AddEditCardDialog> {
                         controller: _nameController,
                         style: const TextStyle(color: Colors.white),
                         decoration: _inputDecoration(
-                          'Nome della Carta *',
-                          hint: 'es. Black Lotus, Charizard, Elsa',
+                          'Nome o Codice della Carta *',
+                          hint: 'es. Kuzan, OP10-082, Charizard, Black Lotus',
                           prefixIcon: Icons.style,
                         ),
                         validator: (val) => val == null || val.isEmpty
@@ -269,7 +313,7 @@ class _AddEditCardDialogState extends State<AddEditCardDialog> {
                 ),
                 const SizedBox(height: 10),
 
-                // PULSANTE RICERCA AUTOMATICA CARDTRADER
+                // PULSANTE RICERCA AUTOMATICA / IMPORT CARDTRADER
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton.icon(
@@ -294,11 +338,11 @@ class _AddEditCardDialogState extends State<AddEditCardDialog> {
                               color: Color(0xFFFFD700),
                             ),
                           )
-                        : const Icon(Icons.search, size: 18),
+                        : const Icon(Icons.download_for_offline, size: 18),
                     label: Text(
                       _isSearching
-                          ? 'Ricerca in corso...'
-                          : '🔍 Auto-cerca Foto & Prezzo (CardTrader)',
+                          ? 'Importazione in corso...'
+                          : '⚡ Auto-Importa Dati & Prezzo da Link / Nome',
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
